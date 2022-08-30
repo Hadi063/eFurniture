@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeMenuHome"
+        android:title="@string/homeMenuHome"
+        android:icon="@drawable/furniture"
+        />
+
+    <item
+        android:id="@+id/homeMenuLove"
+        android:title="@string/homeMenuLove"
+        android:icon="@drawable/heart"/>
+
+    <item
+        android:id="@+id/homeMenuLocation"
+        android:title="@string/homeMenuFav"
+        android:icon="@drawable/delivery_truck"
+        />
+
+
+
+    <item
+        android:id="@+id/homeMenuSettings"
+        android:title="@string/homeMenuSettings"
+        android:icon="@drawable/settings"/>
+</menu>

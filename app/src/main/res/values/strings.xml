@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">fStore</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="loginSignUp">No account? Sign Up!</string>
+    <string name="loginBrowse">Browse without an account?!</string>
+    <string name="loginButton">Shop!</string>
+    <string name="homeMenuLove">Favorites</string>
+    <string name="homeMenuHome">Home</string>
+    <string name="homeMenuSettings">Settings</string>
+    <string name="homeMenuFav">Favorites</string>
+</resources>

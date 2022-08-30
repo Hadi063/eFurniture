@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+        android:hint="Search"
+        app:startIconDrawable="@drawable/ic_search_24"
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/homeMainSearchBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+        </com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/homeMainCatBed"
+                android:layout_width="48dp"
+                android:layout_height="60dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:icon="@drawable/ic_bed_24"
+                app:iconGravity="textTop"
+                android:layout_gravity="center"
+                app:cornerRadius="24dp"
+                android:layout_margin="10dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/homeMainCatChair"
+                android:layout_width="48dp"
+                android:layout_height="60dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:icon="@drawable/ic_chair_24"
+                app:iconGravity="textTop"
+                android:layout_gravity="center"
+                app:cornerRadius="24dp"
+                android:layout_margin="10dp"/>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/homeMainRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+
+
+</LinearLayout>
