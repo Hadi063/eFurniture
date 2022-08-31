@@ -13,12 +13,21 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.fstore.ConnectFlask;
 import com.example.fstore.Data.FurnitureType;
 import com.example.fstore.Data.TheStore;
 import com.example.fstore.R;
 import com.example.fstore.RecyclerViewAdapters.HomeMainRecyclerViewAdapter;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class home_main extends Fragment {
 
@@ -57,16 +66,53 @@ public class home_main extends Fragment {
 
     private void chairClick(View v){
         TheStore.type = FurnitureType.Chair;
-        recyclerView.setAdapter(new HomeMainRecyclerViewAdapter(FurnitureType.Chair));
+
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                ConnectFlask.getUlrCatagory("Chair"),
+                null,
+                this::validResponse,
+                this::invalidResponse
+        );
+
+        jsonArrayRequest.setRetryPolicy(
+                new RetryPolicy() {
+                    @Override
+                    public int getCurrentTimeout() {
+                        return 5000;
+                    }
+                    @Override
+                    public int getCurrentRetryCount() {
+                        return 5000;
+                    }
+                    @Override
+                    public void retry(VolleyError error) throws VolleyError {
+                    }
+                }
+        );
+        ConnectFlask.getInstance(getContext()).addToRequestQueue(jsonArrayRequest);
+
+
+
+    }
+
+    private void validResponse(JSONArray response){
+        ConnectFlask.catagory_response = response;
+        recyclerView.setAdapter(new HomeMainRecyclerViewAdapter());
+    }
+
+    private void invalidResponse(VolleyError error){
+
     }
 
     private void couchClick(View v){
         TheStore.type = FurnitureType.Couch;
-        recyclerView.setAdapter(new HomeMainRecyclerViewAdapter(FurnitureType.Couch));
+        recyclerView.setAdapter(new HomeMainRecyclerViewAdapter());
     }
 
     private void bedClick(View v){
         TheStore.type = FurnitureType.Bed;
-        recyclerView.setAdapter(new HomeMainRecyclerViewAdapter(FurnitureType.Bed));
+        recyclerView.setAdapter(new HomeMainRecyclerViewAdapter());
     }
 }

@@ -13,22 +13,38 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.fstore.ConnectFlask;
 import com.example.fstore.Main;
 import com.example.fstore.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class login extends Fragment {
 
 
     private TextInputEditText username;
     private TextInputEditText password;
+    private TextInputLayout usernameLayout;
+    private TextInputLayout passwordLayout;
 
     private MaterialButton btn;
 
@@ -51,6 +67,8 @@ public class login extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         username = view.findViewById(R.id.loginEditTextUser);
         password = view.findViewById(R.id.loginEditTextPassword);
+        usernameLayout = view.findViewById(R.id.loginUsernameLayout);
+        passwordLayout = view.findViewById(R.id.loginPasswordLayout);
         btn = view.findViewById(R.id.loginBtn);
         signup = view.findViewById(R.id.loginSignUp);
         browse = view.findViewById(R.id.loginBrowse);
@@ -71,23 +89,61 @@ public class login extends Fragment {
         String s1 = username.getText().toString();
         String s2 = password.getText().toString();
 
-        Main.main.runSQL("LOGIN", s1 , s2);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                ConnectFlask.getUrlLogin(s1,s2),
+                null,
+                this::validLogin,
+                this::noLoginResponse
+        );
+
+        jsonObjectRequest.setRetryPolicy(
+                new RetryPolicy() {
+                    @Override
+                    public int getCurrentTimeout() {
+                        return 5000;
+                    }
+                    @Override
+                    public int getCurrentRetryCount() {
+                        return 5000;
+                    }
+                    @Override
+                    public void retry(VolleyError error) throws VolleyError {
+                    }
+                }
+        );
+        ConnectFlask.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+        //Main.main.runSQL("LOGIN", s1 , s2);
     }
 
-    public void startLooper(){
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //Do something after delay
-                int[] i = gd.getColors();
-                i[0] -= 10;
-                i[1] -= 10;
-                gd.setColors(i);
-                layout.setBackground(gd);
-                startLooper();
+    public void validLogin(JSONObject response){
+        System.out.println(response);
+        try {
+            String valid = response.getString("valid");
+            if(valid.equals("true")){
+                ConnectFlask.getInstance(getContext()).login_response = response;
+                Main.main.goHome();
             }
-        }, 1000);
+            if(valid.equals("false")){
+                invalidLogin();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
+
+    public void noLoginResponse(VolleyError error){
+        Toast.makeText(getContext(),"Error connecting!",Toast.LENGTH_SHORT).show();
+    }
+
+    public void invalidLogin(){
+        usernameLayout.setErrorEnabled(true);
+        usernameLayout.setError("Invalid!");
+        passwordLayout.setErrorEnabled(true);
+        passwordLayout.setError("Invalid!");
+    }
+
 
     private void SignUp(View v){
 

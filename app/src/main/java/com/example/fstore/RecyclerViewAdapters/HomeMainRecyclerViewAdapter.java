@@ -8,6 +8,10 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.annotation.GlideExtension;
+import com.bumptech.glide.annotation.GlideModule;
+import com.example.fstore.ConnectFlask;
 import com.example.fstore.Data.Furniture;
 import com.example.fstore.Data.FurnitureType;
 import com.example.fstore.Data.TheStore;
@@ -16,11 +20,13 @@ import com.example.fstore.Home;
 import com.example.fstore.R;
 import com.google.android.material.button.MaterialButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 public class HomeMainRecyclerViewAdapter extends RecyclerView.Adapter<HomeMainRecyclerViewAdapter.ViewHolder> {
 
-    private FurnitureType type;
     private List<Furniture> f ;
 
     /**
@@ -54,9 +60,8 @@ public class HomeMainRecyclerViewAdapter extends RecyclerView.Adapter<HomeMainRe
         }
     }
 
-    public HomeMainRecyclerViewAdapter(FurnitureType type) {
-        this.type = type;
-        f = TheStore.getFurnitureFromType(type);
+    public HomeMainRecyclerViewAdapter() {
+        f = TheStore.getFurnitureFromUrlResponse();
     }
 
     // Create new views (invoked by the layout manager)
@@ -76,16 +81,25 @@ public class HomeMainRecyclerViewAdapter extends RecyclerView.Adapter<HomeMainRe
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         //viewHolder.getTextView().setText(localDataSet[position]);
+        try {
+            JSONObject json = ConnectFlask.catagory_response.getJSONObject(position);
+            Glide.with(viewHolder.itemView).load(json.get("image")).into(viewHolder.getImg());
+            viewHolder.getName().setText(json.get("name").toString());
+            viewHolder.getPrice().setText(json.get("price").toString());
+            viewHolder.getAdd().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        Home.home.SwitchFragment(new home_product(json.get("id").toString()));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        viewHolder.getImg().setImageResource(f.get(position).imgID);
-        viewHolder.getName().setText(f.get(position).name);
-        viewHolder.getPrice().setText("" + f.get(position).price);
-        viewHolder.getAdd().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Home.home.SwitchFragment(new home_product(viewHolder.getAdapterPosition()));
-            }
-        });
 
 
     }
@@ -93,6 +107,6 @@ public class HomeMainRecyclerViewAdapter extends RecyclerView.Adapter<HomeMainRe
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return f.size();
+        return ConnectFlask.catagory_response.length();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.fstore.Fragments.homeFragments;
 
+import android.app.DownloadManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,16 +13,30 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.bumptech.glide.Glide;
+import com.example.fstore.ConnectFlask;
 import com.example.fstore.Data.Furniture;
 import com.example.fstore.Data.TheStore;
 import com.example.fstore.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class home_product extends Fragment {
 
-    private int position;
-    private Furniture f;
-    public home_product(int position){
-        this.position = position;
+    private int productID;
+
+    private ImageView img;
+    private TextView name;
+    private TextView price;
+    private Button buy;
+    private Button fav;
+
+    public home_product(String productID){
+        this.productID = Integer.parseInt(productID);
     }
 
     @Nullable
@@ -34,22 +49,45 @@ public class home_product extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        f = TheStore.getFurniture(position);
-        ImageView img = view.findViewById(R.id.homeShopProductImg);
-        TextView name = view.findViewById(R.id.homeShopProductName);
-        TextView price = view.findViewById(R.id.homeShopProductPrice);
-        Button buy = view.findViewById(R.id.homeShopProductBuy);
-        Button fav = view.findViewById(R.id.homeShopProductFav);
+        img = view.findViewById(R.id.homeShopProductImg);
+        name = view.findViewById(R.id.homeShopProductName);
+        price = view.findViewById(R.id.homeShopProductPrice);
+        buy = view.findViewById(R.id.homeShopProductBuy);
+        fav = view.findViewById(R.id.homeShopProductFav);
 
-        img.setImageResource(f.imgID);
-        name.setText(f.name);
-        price.setText("" + f.price);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                ConnectFlask.getUrlProductFromID(productID),
+                null,
+                this::validResponse,
+                this::invalidResponse
+        );
 
-        fav.setOnClickListener(this::addToCart);
+        ConnectFlask.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+
+        fav.setOnClickListener(this::addToFavorites);
+        buy.setOnClickListener(this::buyProduct);
 
     }
 
-    private void addToCart(View v){
-        TheStore.CART.add(f);
+    private void validResponse(JSONObject response){
+        try {
+            Glide.with(this).load(response.get("image")).into(img);
+            name.setText(response.get("name").toString());
+            price.setText(response.get("price").toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void invalidResponse(VolleyError error){}
+
+    private void addToFavorites(View v){
+        TheStore.FAVORITES.add(productID);
+    }
+
+    private void buyProduct(View v){
+
     }
 }

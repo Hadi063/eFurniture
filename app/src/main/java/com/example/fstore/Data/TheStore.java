@@ -1,5 +1,6 @@
 package com.example.fstore.Data;
 
+import com.example.fstore.ConnectFlask;
 import com.example.fstore.R;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.List;
 public class TheStore {
 
     public static List<FurnitureStore> F;
-    public static List<Furniture> CART;
+    public static List<Integer> FAVORITES;
 
     public static FurnitureType type = null;
 
@@ -46,11 +47,20 @@ public class TheStore {
 
         return F.get(0).f.get(0);
     }
+    public static List<Furniture> getFurnitureFromUrlResponse(){
 
+        List<Furniture> f = new ArrayList<>();
+
+        for (int i = 0; i < ConnectFlask.catagory_response.length(); i++) {
+
+        }
+
+        return f;
+    }
     public static void setTheShop(){
 
         F = new ArrayList<>();
-        CART = new ArrayList<>();
+        FAVORITES = new ArrayList<>();
         for (FurnitureType type: FurnitureType.values()) {
             F.add(new FurnitureStore(type));
         }

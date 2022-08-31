@@ -31,6 +31,7 @@ public class fav_main extends Fragment {
 
         ListView list = view.findViewById(R.id.favMainListView);
         list.setAdapter(new FavMainListAdapter(getContext(),R.layout.__home_main_recycler));
+
     }
 
     private void buyClick(View v){
