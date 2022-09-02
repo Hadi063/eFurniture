@@ -4,30 +4,25 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.fstore.ConnectFlask;
 import com.example.fstore.Data.FurnitureType;
-import com.example.fstore.Data.TheStore;
 import com.example.fstore.R;
 import com.example.fstore.RecyclerViewAdapters.HomeMainRecyclerViewAdapter;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.card.MaterialCardView;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class home_main extends Fragment {
 
@@ -48,29 +43,75 @@ public class home_main extends Fragment {
         //LinearLayout shop = view.findViewById(R.id.homeShop);
         //LinearLayout catagory = view.findViewById(R.id.homeCatagory);
 
-        MaterialButton chair = view.findViewById(R.id.homeMainCatChair);
-        MaterialButton bed = view.findViewById(R.id.homeMainCatBed);
+        MaterialCardView chair = view.findViewById(R.id.homeMainCatChair);
+        MaterialCardView bed = view.findViewById(R.id.homeMainCatBed);
+        MaterialCardView couch = view.findViewById(R.id.homeMainCatCouch);
+        MaterialCardView desk = view.findViewById(R.id.homeMainCatDesk);
 
-        TextInputEditText search = view.findViewById(R.id.homeMainSearchBar);
+        SearchView search = view.findViewById(R.id.homeMainSearchBar);
 
         recyclerView = view.findViewById(R.id.homeMainRecyclerView);
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(llm);
 
         chair.setOnClickListener(this::chairClick);
         bed.setOnClickListener(this::bedClick);
+        couch.setOnClickListener(this::couchClick);
+        desk.setOnClickListener(this::deskClick);
+
+        search.clearFocus();
+        search.setActivated(false);
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                goSearch(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        sendArrayRequest(ConnectFlask.getUrlRandom());
 
         homeMain = this;
 
     }
 
-
+    private void goSearch(String query){
+        sendArrayRequest(ConnectFlask.getUrlSearch(query));
+    }
 
     private void chairClick(View v){
-        TheStore.type = FurnitureType.Chair;
+        sendArrayRequest(ConnectFlask.getUrlCategory(FurnitureType.Chair.name()));
+    }
 
+    private void bedClick(View v){
+        sendArrayRequest(ConnectFlask.getUrlCategory(FurnitureType.Bed.name()));
+    }
+    private void couchClick(View v){
+        sendArrayRequest(ConnectFlask.getUrlCategory(FurnitureType.Couch.name()));
+    }
 
+    private void deskClick(View v){
+        sendArrayRequest(ConnectFlask.getUrlCategory(FurnitureType.Desk.name()));
+    }
+    private void validResponse(JSONArray response){
+        ConnectFlask.category_response = response;
+        recyclerView.setAdapter(new HomeMainRecyclerViewAdapter());
+    }
+
+    private void invalidResponse(VolleyError error){
+
+    }
+
+    private void sendArrayRequest(String URL){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
-                ConnectFlask.getUlrCatagory("Chair"),
+                URL,
                 null,
                 this::validResponse,
                 this::invalidResponse
@@ -91,28 +132,9 @@ public class home_main extends Fragment {
                     }
                 }
         );
+
         ConnectFlask.getInstance(getContext()).addToRequestQueue(jsonArrayRequest);
-
-
-
     }
 
-    private void validResponse(JSONArray response){
-        ConnectFlask.catagory_response = response;
-        recyclerView.setAdapter(new HomeMainRecyclerViewAdapter());
-    }
 
-    private void invalidResponse(VolleyError error){
-
-    }
-
-    private void couchClick(View v){
-        TheStore.type = FurnitureType.Couch;
-        recyclerView.setAdapter(new HomeMainRecyclerViewAdapter());
-    }
-
-    private void bedClick(View v){
-        TheStore.type = FurnitureType.Bed;
-        recyclerView.setAdapter(new HomeMainRecyclerViewAdapter());
-    }
 }

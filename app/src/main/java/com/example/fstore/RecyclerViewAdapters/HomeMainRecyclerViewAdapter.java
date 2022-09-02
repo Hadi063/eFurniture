@@ -9,11 +9,8 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.annotation.GlideExtension;
-import com.bumptech.glide.annotation.GlideModule;
 import com.example.fstore.ConnectFlask;
 import com.example.fstore.Data.Furniture;
-import com.example.fstore.Data.FurnitureType;
 import com.example.fstore.Data.TheStore;
 import com.example.fstore.Fragments.homeFragments.home_product;
 import com.example.fstore.Home;
@@ -61,7 +58,8 @@ public class HomeMainRecyclerViewAdapter extends RecyclerView.Adapter<HomeMainRe
     }
 
     public HomeMainRecyclerViewAdapter() {
-        f = TheStore.getFurnitureFromUrlResponse();
+        //f = TheStore.getFurnitureFromUrlResponse();
+        //f = TheStore.F;
     }
 
     // Create new views (invoked by the layout manager)
@@ -69,7 +67,7 @@ public class HomeMainRecyclerViewAdapter extends RecyclerView.Adapter<HomeMainRe
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.__home_main_recycler, viewGroup, false);
+                .inflate(R.layout.__home_main_recycler, null);
 
         return new ViewHolder(view);
     }
@@ -82,7 +80,7 @@ public class HomeMainRecyclerViewAdapter extends RecyclerView.Adapter<HomeMainRe
         // contents of the view with that element
         //viewHolder.getTextView().setText(localDataSet[position]);
         try {
-            JSONObject json = ConnectFlask.catagory_response.getJSONObject(position);
+            JSONObject json = ConnectFlask.category_response.getJSONObject(position);
             Glide.with(viewHolder.itemView).load(json.get("image")).into(viewHolder.getImg());
             viewHolder.getName().setText(json.get("name").toString());
             viewHolder.getPrice().setText(json.get("price").toString());
@@ -107,6 +105,6 @@ public class HomeMainRecyclerViewAdapter extends RecyclerView.Adapter<HomeMainRe
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return ConnectFlask.catagory_response.length();
+        return ConnectFlask.category_response.length();
     }
 }

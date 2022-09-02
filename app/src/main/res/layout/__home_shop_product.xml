@@ -8,7 +8,8 @@
     <ImageView
         android:id="@+id/homeShopProductImg"
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="300dp"
+        android:scaleType="fitXY"/>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
@@ -76,18 +77,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/homeShopProductFav"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
-                    android:layout_gravity="center"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    style="@style/Widget.App.Button.OutlinedButton.IconOnly"
                     app:icon="@drawable/ic_baseline_favorite_24"
                     app:iconGravity="textStart"
                     app:iconTint="#Ca7a7a"
+                    app:cornerRadius="24dp"
 
                     />
 
@@ -97,7 +99,6 @@
                     android:layout_height="wrap_content"
                     android:text="Buy"
                     android:layout_margin="20dp"
-                    android:layout_gravity="center"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
             </LinearLayout>

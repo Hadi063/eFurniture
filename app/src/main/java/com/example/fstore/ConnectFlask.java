@@ -1,39 +1,29 @@
 package com.example.fstore;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask;
-
-import androidx.appcompat.content.res.AppCompatResources;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 public class ConnectFlask{
 
 
     public static final String URL = "http://192.168.1.108:5000";
     public static final String URL_LOGIN = URL + "/user";
-    public static final String ULR_CATAGORY = URL + "/catagory";
-    public static final String ULR_PRODUCT = ULR_CATAGORY + "/product";
+    public static final String URL_CATEGORY = URL + "/category";
+    public static final String URL_PRODUCT = URL_CATEGORY + "/product";
+    public static final String URL_SEARCH = URL + "/search";
+    public static final String URL_RANDOM = URL + "/random";
 
     private static ConnectFlask instance;
 
     public JSONObject login_response;
-    public static JSONArray catagory_response;
+    public static JSONArray category_response;
 
 
     public static ConnectFlask getInstance(Context context){
@@ -62,11 +52,19 @@ public class ConnectFlask{
         return String.format(URL_LOGIN + "?username=%s&password=%s",username,password);
     }
 
-    public static String getUlrCatagory(String type){
-        return String.format(ULR_CATAGORY + "?type=%s",type);
+    public static String getUrlCategory(String type){
+        return String.format(URL_CATEGORY + "?type=%s",type);
     }
 
     public static String getUrlProductFromID(int id){
-        return String.format(ULR_PRODUCT + "?productid=%s",String.valueOf(id));
+        return String.format(URL_PRODUCT + "?productid=%s",String.valueOf(id));
+    }
+
+    public static String getUrlSearch(String query){
+        return String.format(URL_SEARCH + "?search=%s",query);
+    }
+
+    public static String getUrlRandom(){
+        return String.format(URL_RANDOM);
     }
 }

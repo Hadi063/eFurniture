@@ -6,22 +6,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-
-    <com.google.android.material.textfield.TextInputLayout
+    <SearchView
+        android:id="@+id/homeMainSearchBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-        android:hint="Search"
-        app:startIconDrawable="@drawable/ic_search_24"
-        app:boxCornerRadiusTopStart="10dp"
-        app:boxCornerRadiusTopEnd="10dp">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/homeMainSearchBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp">
-        </com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
+        style="@style/Widget.AppCompat.SearchView.ActionBar"
+        android:queryHint="What are you looking for!?"
+        android:layout_margin="10dp"/>
 
     <HorizontalScrollView
         android:layout_width="match_parent"
@@ -34,27 +25,69 @@
             android:orientation="horizontal"
             android:layout_gravity="center"
             android:gravity="center">
-            <com.google.android.material.button.MaterialButton
+
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/homeMainCatBed"
                 android:layout_width="48dp"
-                android:layout_height="60dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                app:icon="@drawable/ic_bed_24"
-                app:iconGravity="textTop"
-                android:layout_gravity="center"
-                app:cornerRadius="24dp"
-                android:layout_margin="10dp"/>
+                android:layout_height="48dp"
+                style="@style/Widget.MaterialComponents.CardView"
+                app:cardElevation="8dp"
+                app:cardCornerRadius="24dp"
+                android:layout_margin="10dp"
+                android:layout_gravity="center">
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/cat_bed"
+                    android:layout_gravity="center"/>
+            </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.button.MaterialButton
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/homeMainCatChair"
                 android:layout_width="48dp"
-                android:layout_height="60dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                app:icon="@drawable/ic_chair_24"
-                app:iconGravity="textTop"
-                android:layout_gravity="center"
-                app:cornerRadius="24dp"
-                android:layout_margin="10dp"/>
+                android:layout_height="48dp"
+                style="@style/Widget.MaterialComponents.CardView"
+                app:cardElevation="8dp"
+                app:cardCornerRadius="24dp"
+                android:layout_margin="10dp"
+                android:layout_gravity="center">
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/cat_chair"
+                    android:layout_gravity="center"/>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/homeMainCatDesk"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                style="@style/Widget.MaterialComponents.CardView"
+                app:cardElevation="8dp"
+                app:cardCornerRadius="24dp"
+                android:layout_margin="10dp"
+                android:layout_gravity="center">
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/cat_desk"
+                    android:layout_gravity="center"/>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/homeMainCatCouch"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                style="@style/Widget.MaterialComponents.CardView"
+                app:cardElevation="8dp"
+                app:cardCornerRadius="24dp"
+                android:layout_margin="10dp"
+                android:layout_gravity="center">
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/cat_couch"
+                    android:layout_gravity="center"/>
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
     </HorizontalScrollView>
 

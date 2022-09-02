@@ -27,7 +27,7 @@ public class home_catagory extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        /*
         LinearLayout chair = view.findViewById(R.id.catagoryChair);
         LinearLayout couch = view.findViewById(R.id.catagoryCouch);
         LinearLayout bed = view.findViewById(R.id.catagoryBed);
@@ -35,6 +35,8 @@ public class home_catagory extends Fragment {
         chair.setOnClickListener(this::chairClick);
         couch.setOnClickListener(this::couchClick);
         bed.setOnClickListener(this::bedClick);
+
+         */
     }
 
     private void chairClick(View v){

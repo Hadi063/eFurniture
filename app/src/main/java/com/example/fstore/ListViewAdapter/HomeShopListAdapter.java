@@ -28,11 +28,14 @@ public class HomeShopListAdapter extends ArrayAdapter {
     public HomeShopListAdapter(@NonNull Context context, int resource) {
         super(context, resource);
         this.resource = resource;
+        /*
         if(TheStore.type == null){
             f = TheStore.getAllFurniture();
         }else {
             f = TheStore.getFurnitureFromType(TheStore.type);
         }
+
+         */
     }
 
     @NonNull
