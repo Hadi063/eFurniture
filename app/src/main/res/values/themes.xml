@@ -14,7 +14,7 @@
         <item name="rippleColor">#ca7a7a</item>
         <item name="checkedIconTint">#ca7a7a</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
         <!-- Customize your theme here. -->
     </style>
 </resources>

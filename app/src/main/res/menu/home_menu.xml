@@ -17,8 +17,6 @@
         android:icon="@drawable/delivery_truck"
         />
 
-
-
     <item
         android:id="@+id/homeMenuSettings"
         android:title="@string/homeMenuSettings"
