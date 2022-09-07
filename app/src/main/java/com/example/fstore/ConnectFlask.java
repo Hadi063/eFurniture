@@ -5,7 +5,9 @@ import android.content.Context;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.fstore.Fragments.signupFragments.signup;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,6 +21,7 @@ public class ConnectFlask{
     public static final String URL_PRODUCT = URL_CATEGORY + "/product";
     public static final String URL_SEARCH = URL + "/search";
     public static final String URL_RANDOM = URL + "/random";
+    public static final String URL_SIGNUP = URL + "/signup";
 
     private static ConnectFlask instance;
 
@@ -43,7 +46,9 @@ public class ConnectFlask{
     public void addToRequestQueue(JsonArrayRequest jsonArrayRequest){
         requestQueue.add(jsonArrayRequest);
     }
-
+    public void addToRequestQueue(StringRequest stringRequest){
+        requestQueue.add(stringRequest);
+    }
     private RequestQueue requestQueue;
 
 
@@ -66,5 +71,9 @@ public class ConnectFlask{
 
     public static String getUrlRandom(){
         return String.format(URL_RANDOM);
+    }
+    public static String getUrlSignup(){
+        return String.format(URL_SIGNUP + "?username=%s&password=%s&email=%s&first=%s&last=%s&country=%s&phone=%s",
+                signup.username,signup.password,signup.email,signup.first,signup.last,signup.country,signup.phone);
     }
 }

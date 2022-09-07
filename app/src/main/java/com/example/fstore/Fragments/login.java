@@ -17,6 +17,8 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.fstore.ConnectFlask;
+import com.example.fstore.Fragments.signupFragments.signup;
+import com.example.fstore.Fragments.signupFragments.signupPage1;
 import com.example.fstore.Main;
 import com.example.fstore.R;
 import com.google.android.material.button.MaterialButton;
@@ -131,7 +133,7 @@ public class login extends Fragment {
 
     private void SignUp(View v){
 
-        Main.main.SwitchFragment(new signup());
+        Main.main.SwitchFragment(new signupPage1());
         System.out.println("Sign UP!");
     }
 

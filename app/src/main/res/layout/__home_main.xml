@@ -12,7 +12,10 @@
         android:layout_height="wrap_content"
         style="@style/Widget.AppCompat.SearchView.ActionBar"
         android:queryHint="What are you looking for!?"
-        android:layout_margin="10dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="10dp"
+        android:inputType="text"
+        />
 
     <HorizontalScrollView
         android:layout_width="match_parent"
@@ -96,8 +99,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/homeMainRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
         android:layout_gravity="center"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>

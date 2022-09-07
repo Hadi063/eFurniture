@@ -9,6 +9,7 @@ import android.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,9 +52,8 @@ public class home_main extends Fragment {
         SearchView search = view.findViewById(R.id.homeMainSearchBar);
 
         recyclerView = view.findViewById(R.id.homeMainRecyclerView);
-        LinearLayoutManager llm = new LinearLayoutManager(getContext());
-        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recyclerView.setLayoutManager(llm);
+        GridLayoutManager glm = new GridLayoutManager(getContext(),2,GridLayoutManager.HORIZONTAL,false);
+        recyclerView.setLayoutManager(glm);
 
         chair.setOnClickListener(this::chairClick);
         bed.setOnClickListener(this::bedClick);
