@@ -8,7 +8,7 @@
     <string name="homeMenuLove">Favorites</string>
     <string name="homeMenuHome">Home</string>
     <string name="homeMenuSettings">Settings</string>
-    <string name="homeMenuFav">Favorites</string>
+    <string name="homeMenuOrders">Orders</string>
 
 
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDHizfY6osnZB_gzL6wlJmUvPnRZ3TFfZM</string>

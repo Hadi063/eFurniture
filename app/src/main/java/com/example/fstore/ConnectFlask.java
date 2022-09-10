@@ -22,6 +22,8 @@ public class ConnectFlask{
     public static final String URL_SEARCH = URL + "/search";
     public static final String URL_RANDOM = URL + "/random";
     public static final String URL_SIGNUP = URL + "/signup";
+    public static final String URL_POSTORDER = URL + "/orders/postorder";
+    public static final String URL_GETORDERS = URL + "/orders/userorders";
 
     private static ConnectFlask instance;
 
@@ -35,6 +37,7 @@ public class ConnectFlask{
 
         return instance;
     }
+
 
     public ConnectFlask(Context context){
         this.requestQueue = Volley.newRequestQueue(context);
@@ -56,24 +59,27 @@ public class ConnectFlask{
 
         return String.format(URL_LOGIN + "?username=%s&password=%s",username,password);
     }
-
     public static String getUrlCategory(String type){
         return String.format(URL_CATEGORY + "?type=%s",type);
     }
-
     public static String getUrlProductFromID(int id){
         return String.format(URL_PRODUCT + "?productid=%s",String.valueOf(id));
     }
-
     public static String getUrlSearch(String query){
         return String.format(URL_SEARCH + "?search=%s",query);
     }
-
     public static String getUrlRandom(){
         return String.format(URL_RANDOM);
     }
     public static String getUrlSignup(){
         return String.format(URL_SIGNUP + "?username=%s&password=%s&email=%s&first=%s&last=%s&country=%s&phone=%s",
                 signup.username,signup.password,signup.email,signup.first,signup.last,signup.country,signup.phone);
+    }
+    public static String getUrlPostOrder(String id, int productID){
+
+        return String.format(URL_POSTORDER + "?id=%s&productID=%s",id,String.valueOf(productID));
+    }
+    public static String getUrlGetOrders(String id){
+        return String.format(URL_GETORDERS + "?id=%s",id);
     }
 }

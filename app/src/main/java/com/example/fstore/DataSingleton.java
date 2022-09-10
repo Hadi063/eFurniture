@@ -12,7 +12,7 @@ public class DataSingleton {
         return ds;
     }
 
-    public String first = "Hadi";
+    public String first = "Ata";
     public String last = "Daddy";
     public String phone = "0598765432";
 }

@@ -138,6 +138,6 @@ public class login extends Fragment {
     }
 
     private void Browse(View v){
-        System.out.println("BROWSE!");
+        Main.main.goHome();
     }
 }

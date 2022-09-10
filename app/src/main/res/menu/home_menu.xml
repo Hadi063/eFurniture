@@ -13,7 +13,7 @@
 
     <item
         android:id="@+id/homeMenuLocation"
-        android:title="@string/homeMenuFav"
+        android:title="@string/homeMenuOrders"
         android:icon="@drawable/delivery_truck"
         />
 

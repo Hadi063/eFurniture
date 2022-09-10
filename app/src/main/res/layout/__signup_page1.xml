@@ -82,7 +82,7 @@
         app:counterMaxLength="35"
         app:endIconMode="clear_text"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        app:startIconDrawable="@drawable/ic_lock_24"
+        app:startIconDrawable="@drawable/ic_email_24"
         app:helperTextEnabled="true"
         app:helperText="Required*"
         app:helperTextTextColor="#ff9190">
@@ -90,8 +90,8 @@
             android:id="@+id/signupEditTextEmail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890/*-+.~!@#$%^()"
-            android:inputType="textPassword"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.@"
+            android:inputType="textEmailAddress"
             android:maxLength="36"/>
     </com.google.android.material.textfield.TextInputLayout>
 

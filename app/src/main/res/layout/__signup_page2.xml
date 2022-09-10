@@ -75,44 +75,38 @@
 
 
 
-    <LinearLayout
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/ccp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:ccp_countryPreference="us,in"
+        android:layout_margin="10dp"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_margin="10dp">
-
-        <com.hbb20.CountryCodePicker
-            android:id="@+id/ccp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:ccp_countryPreference="us,in"
-            />
-
-        <com.google.android.material.textfield.TextInputLayout
+        android:layout_margin="10dp"
+        android:hint="Phone"
+        android:gravity="center"
+        app:boxCollapsedPaddingTop="30dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="9"
+        app:endIconMode="clear_text"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        app:startIconDrawable="@drawable/ic_phone_24"
+        app:helperTextEnabled="true"
+        app:helperText="Required*"
+        app:helperTextTextColor="#ff9190"
+        app:prefixText="+970">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signupEditTextPhone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="Phone"
-            android:gravity="center"
-            app:boxCollapsedPaddingTop="30dp"
-            app:counterEnabled="true"
-            app:counterMaxLength="9"
-            app:endIconMode="clear_text"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            app:startIconDrawable="@drawable/ic_phone_24"
-            app:helperTextEnabled="true"
-            app:helperText="Required*"
-            app:helperTextTextColor="#ff9190"
-            app:prefixText="+970">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/signupEditTextPhone"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="phone"
-                android:maxLength="10"/>
+            android:layout_height="match_parent"
+            android:inputType="phone"
+            android:maxLength="10"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <TextView

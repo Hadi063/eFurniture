@@ -89,5 +89,26 @@ public class home_product extends Fragment {
 
     private void buyProduct(View v){
 
+
+        try {
+            String id = ConnectFlask.getInstance(getContext()).login_response.getString("id");
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST,
+                    ConnectFlask.getUrlPostOrder(id, productID),
+                    null,
+                    this::buyValidResponse,
+                    this::buyInvalidResponse
+            );
+            ConnectFlask.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
     }
+
+    private void buyValidResponse(JSONObject response){}
+
+    private void buyInvalidResponse(VolleyError error){}
+
 }

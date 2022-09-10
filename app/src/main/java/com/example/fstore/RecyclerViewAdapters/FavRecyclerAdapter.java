@@ -8,9 +8,10 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.example.fstore.ConnectFlask;
-import com.example.fstore.Data.Furniture;
 import com.example.fstore.Data.TheStore;
 import com.example.fstore.Fragments.homeFragments.home_product;
 import com.example.fstore.Home;
@@ -20,17 +21,14 @@ import com.google.android.material.button.MaterialButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
-
-public class HomeMainRecyclerViewAdapter extends RecyclerView.Adapter<HomeMainRecyclerViewAdapter.ViewHolder> {
-
-    private List<Furniture> f ;
+public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.ViewHolder>{
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView img;
         private final MaterialButton add;
         private final TextView name;
         private final TextView price;
+
         public ViewHolder(View view) {
             super(view);
             img = view.findViewById(R.id.homeMainRecyclerImg);
@@ -53,54 +51,58 @@ public class HomeMainRecyclerViewAdapter extends RecyclerView.Adapter<HomeMainRe
         }
     }
 
-    public HomeMainRecyclerViewAdapter() {
+    public FavRecyclerAdapter() {
         //f = TheStore.getFurnitureFromUrlResponse();
         //f = TheStore.F;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public FavRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.__home_main_recycler, null);
 
-        return new ViewHolder(view);
+        return new FavRecyclerAdapter.ViewHolder(view);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(FavRecyclerAdapter.ViewHolder viewHolder, final int position) {
 
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        //viewHolder.getTextView().setText(localDataSet[position]);
-        try {
-            JSONObject json = ConnectFlask.category_response.getJSONObject(position);
-            Glide.with(viewHolder.itemView).load(json.get("image")).into(viewHolder.getImg());
-            viewHolder.getName().setText(json.get("name").toString());
-            viewHolder.getPrice().setText(json.get("price").toString());
-            viewHolder.getAdd().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                ConnectFlask.getUrlProductFromID(TheStore.FAVORITES.get(position)),
+                null,
+                response -> {
                     try {
-                        Home.home.SwitchFragment(new home_product(json.get("id").toString()));
+                        Glide.with(viewHolder.itemView).load(response.get("image")).into((viewHolder.getImg()));
+                        viewHolder.getName().setText(response.get("name").toString());
+                        viewHolder.getPrice().setText(response.get("price").toString());
+                        viewHolder.getAdd().setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v1) {
+                                //will do error --->
+                                try {
+                                    Home.home.SwitchFragment(new home_product(response.get("id").toString()));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-
+                },
+                error -> {}
+        );
+        ConnectFlask.getInstance(viewHolder.itemView.getContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return ConnectFlask.category_response.length();
+        return TheStore.FAVORITES.size();
     }
 }

@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.fstore.ConnectFlask;
+import com.example.fstore.Fragments.login;
 import com.example.fstore.Main;
 import com.example.fstore.Maps;
 import com.example.fstore.R;
@@ -81,6 +82,8 @@ public class signupPage2 extends Fragment {
     }
 
     private void validResponse(String response){
+
+        Main.main.SwitchFragment(new login());
         System.out.println(response);
     }
 

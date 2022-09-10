@@ -12,8 +12,9 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.fstore.Data.TheStore;
 import com.example.fstore.Fragments.favFragments.fav_main;
 import com.example.fstore.Fragments.homeFragments.home_main;
-import com.example.fstore.Fragments.locationFragments.location_main;
+import com.example.fstore.Fragments.ordersFragments.orders_main;
 import com.example.fstore.Fragments.settingsFragments.settings_main;
+import com.example.fstore.Fragments.settingsFragments.settings_offline;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Home extends AppCompatActivity {
@@ -59,7 +60,12 @@ public class Home extends AppCompatActivity {
             return true;
         }
         if(item.getItemId() == R.id.homeMenuLocation){
-            //SwitchFragment(new location_main());
+            if(ConnectFlask.getInstance(this).login_response != null){
+                SwitchFragment(new orders_main());
+            }else{
+                SwitchFragment(new settings_offline());
+            }
+
             return true;
         }
 
